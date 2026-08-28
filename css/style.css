@@ -10,13 +10,14 @@
 
 :root{
   --container: 1220px;
-  --section-pad: 50px;
+  --section-pad: 60px;
   --radius: 5px;
 
   /* one rhythm for every section */
   --gap-eyebrow: 16px;   /* eyebrow  -> title   */
   --gap-title:   34px;   /* title    -> content */
   --gap-item:    18px;   /* inside a single item */
+  --gap-block:   30px;   /* between stacked blocks */
 
   /* Brand palette — Casa Salento (developservice.de/casa-salento) */
   --sage:       #8A9A78;   /* primary — solid buttons, active accents */
@@ -74,6 +75,16 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   letter-spacing: .17em;
 }
 
+.section-lead{
+  max-width: 620px;
+  margin: var(--gap-eyebrow) auto 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 28px;
+  color: var(--muted);
+}
+
 .section-eyebrow{
   margin: 0 0 var(--gap-eyebrow);
   text-align: center;
@@ -114,7 +125,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .btn--story{ height: 44px; width: 178px; font-size: 11px; }
 .btn--highlight{ height: 44px; width: 178px; font-size: 11px; }
 .btn--cart{ height: 33px; width: 211px; font-size: 10px; letter-spacing: .12em; }
-.btn--icard{ height: 36px; width: 148px; font-size: 10px; }
+.btn--icard{ height: 44px; width: 176px; font-size: 11px; }
 .btn--news{ height: 52px; width: 186px; font-size: 11px; border-radius: 0; }
 
 /* ==========================================================================
@@ -224,23 +235,27 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
    ========================================================================== */
 .hero{
   position: relative;
-  height: 640px;
-  background: var(--hero-ground);
+  padding: var(--section-pad) 0;
+  background:
+    radial-gradient(120% 90% at 82% 18%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 58%),
+    linear-gradient(135deg, #FBF8F2 0%, var(--hero-ground) 52%, #E6DACB 100%);
   overflow: hidden;
-}
-.hero__photo{
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: auto;
-  height: 600px;
 }
 .hero__inner{
   position: relative;
   z-index: 2;
-  width: var(--container);
-  margin: 0 auto;
-  padding: 112px 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  padding: 0 20px;
+}
+.hero__copy{ max-width: 540px; }
+.hero__media{ display: flex; justify-content: flex-end; }
+.hero__photo{
+  width: 100%;
+  max-width: 592px;
+  height: auto;
 }
 .hero__title{
   font-family: var(--serif);
@@ -249,22 +264,22 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   line-height: 55px;
   letter-spacing: 0;
   color: var(--dark);
-  margin: 16px 0 0;
+  margin: var(--gap-eyebrow) 0 0;
 }
 .hero__text{
-  margin-top: 24px;
+  margin-top: var(--gap-item);
   font-size: 17px;
   font-weight: 300;
   line-height: 27px;
   color: var(--muted);
 }
 .hero__actions{
-  margin-top: 37px;
+  margin-top: var(--gap-block);
   display: flex;
-  gap: 44px;
+  gap: var(--gap-item);
 }
 .rating{
-  margin-top: 53px;
+  margin-top: var(--gap-block);
   display: flex;
   align-items: center;
   gap: 11px;
@@ -331,7 +346,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
    Story
    ========================================================================== */
 .story{
-  background: var(--cream);
+  background: var(--offwhite);
   padding: var(--section-pad) 0;
 }
 .story__grid{
@@ -372,21 +387,19 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   position: relative;
   z-index: 2;          /* the bottle paints over the section above */
   background: var(--white);
-  padding: var(--section-pad) 0;
+  padding: var(--section-pad) 0 calc(var(--section-pad) + 44px);
 }
 .highlight__inner{
   position: relative;
   width: var(--container);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 458px 532px 230px;
+  grid-template-columns: 420px 550px 250px;
   align-items: center;
 }
 .highlight__media{
   position: relative;
   align-self: stretch;       /* the absolute image needs a full-height box */
-  margin-left: -71px;
-  padding-left: 118px;
 }
 .highlight__media img{
   position: absolute;
@@ -397,7 +410,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   width: auto;
   height: 545px;             /* taller than the band, so the cap rises above it */
 }
-.highlight__text{ padding-right: 24px; }
+.highlight__text{ padding: 0 34px 0 10px; }
 .highlight__title{
   margin-top: 20px;
   font-family: var(--serif);
@@ -474,7 +487,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .pcard{
   width: 338px;
-  height: 424px;
+  min-height: 424px;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--hairline);
@@ -500,7 +513,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .pcard__body{
   flex: 1;
-  padding: 20px 20px 0;
+  padding: 20px 20px 24px;
   text-align: center;
 }
 .pcard__cat{
@@ -533,7 +546,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
    Values ("Was du an Casa Salento liebst")
    ========================================================================== */
 .values{
-  background: var(--offwhite);
+  background: var(--white);
   padding: var(--section-pad) 0;
 }
 .values__box{
@@ -589,6 +602,150 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 
 /* ==========================================================================
+   Unsere Werte — "Was Casa Salento besonders macht"
+   ========================================================================== */
+.werte{
+  background: var(--offwhite);
+  padding: var(--section-pad) 0;
+}
+.werte__grid{
+  margin-top: var(--gap-title);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.wcard{ text-align: center; }
+.wcard__media{
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.wcard__media img{
+  width: 100%;
+  height: 290px;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+.wcard:hover .wcard__media img{ transform: scale(1.05); }
+.wcard__title{
+  margin-top: var(--gap-item);
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--dark);
+}
+.wcard__rule{
+  display: block;
+  width: 30px;
+  height: 1px;
+  margin: 12px auto;
+  background: rgba(138, 154, 120, .6);
+}
+.wcard__text{
+  max-width: 340px;
+  margin: 0 auto;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 24px;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   Unsere Geschichte — five-station story
+   ========================================================================== */
+.geschichte{
+  background: var(--white);
+  padding: var(--section-pad) 0;
+}
+.geschichte__box{
+  margin-top: var(--gap-title);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 56px;
+  padding: 44px;
+  border: 1px solid var(--sage);
+  border-radius: var(--radius);
+  background: var(--offwhite);
+}
+.geschichte__media img{
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 18px 28px rgba(35, 40, 27, .18));
+}
+
+.gpanels{ position: relative; }
+.gpanel{
+  padding: 24px 26px;
+  border-radius: 4px;
+  background: var(--sage);
+  min-height: 168px;
+}
+.gpanel__title{
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--white);
+}
+.gpanel__text{
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 24px;
+  color: rgba(255, 255, 255, .92);
+}
+
+.gsteps{
+  position: relative;
+  margin-top: var(--gap-block);
+  display: flex;
+  justify-content: space-between;
+}
+.gsteps::before{
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 21px;
+  height: 2px;
+  background: rgba(138, 154, 120, .45);
+}
+.gsteps__item{ position: relative; text-align: center; }
+.gsteps__dot{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto;
+  border: 1px solid var(--sage);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--sage);
+  box-shadow: 0 0 0 4px var(--offwhite);
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+.gsteps__dot svg{ width: 24px; height: 24px; }
+.gsteps__dot:hover{ background: var(--sage); color: var(--white); }
+.gsteps__dot.is-active{
+  background: var(--sage-dark);
+  border-color: var(--sage-dark);
+  color: var(--white);
+}
+.gsteps__label{
+  display: block;
+  margin-top: 10px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 13.5px;
+  color: var(--dark);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
    Inspiration
    ========================================================================== */
 .inspiration{
@@ -617,20 +774,20 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .icard__img--trulli{ object-position: 50% 55%; }
 .icard__img--anti{ object-position: 50% 55%; }
 .icard__body{
-  padding: 22px 24px 26px;
+  padding: 26px 26px 30px;
   text-align: center;
 }
 .icard__title{
   font-family: var(--serif);
-  font-size: 15px;
+  font-size: 21px;
   font-weight: 400;
   color: var(--dark);
 }
 .icard__text{
-  margin-top: 11px;
-  font-size: 13px;
+  margin-top: 12px;
+  font-size: 14px;
   font-weight: 300;
-  line-height: 20px;
+  line-height: 24px;
   color: var(--muted);
 }
 .btn--icard{ margin-top: var(--gap-item); }
@@ -641,27 +798,19 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .newsletter{
   position: relative;
   padding: var(--section-pad) 0;
-  background: var(--cream);
+  background: var(--cream) url("../assets/images/newsletter-bg.jpg") center / cover no-repeat;
   overflow: hidden;
-}
-.newsletter__branch{
-  position: absolute;
-  left: -14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 248px;
-  height: auto;
 }
 .newsletter__inner{
   position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 60px;
-  padding-left: 216px;
+  gap: 70px;
+  padding: 0 20px;
+  max-width: 1020px;
+  margin: 0 auto;
 }
-.newsletter__eyebrow{ margin-bottom: var(--gap-eyebrow); color: var(--kicker); }
 .newsletter__title{
   font-family: var(--serif);
   font-size: 32px;
@@ -670,7 +819,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   color: var(--dark);
 }
 .newsletter__lead{
-  margin-top: 14px;
+  margin-top: var(--gap-item);
   max-width: 430px;
   font-size: 15px;
   font-weight: 300;
@@ -697,6 +846,22 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .newsletter__input::placeholder{ color: var(--kicker); }
 .newsletter__input:focus{ outline: 1px solid var(--sage); outline-offset: -1px; }
+.newsletter__consent{
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12.5px;
+  font-weight: 300;
+  color: var(--muted);
+  cursor: pointer;
+}
+.newsletter__consent input{
+  width: 14px;
+  height: 14px;
+  accent-color: var(--sage);
+}
+.newsletter__consent a{ text-decoration: underline; }
 .newsletter__note{
   margin-top: 12px;
   font-size: 13px;
@@ -756,7 +921,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   height: auto;
 }
 .footer__desc{
-  margin-top: 26px;
+  margin-top: var(--gap-item);
   font-size: 14px;
   font-weight: 300;
   line-height: 26px;

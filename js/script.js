@@ -36,4 +36,21 @@
     window.addEventListener('scroll', sync, { passive: true });
     sync();
   }
+
+  /* --- "Unsere Geschichte" five-station story --- */
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.gsteps__dot'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.gpanel'));
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      var i = Number(dot.dataset.step);
+      dots.forEach(function (d, n) {
+        d.classList.toggle('is-active', n === i);
+        d.setAttribute('aria-selected', n === i ? 'true' : 'false');
+      });
+      panels.forEach(function (p, n) {
+        p.classList.toggle('is-active', n === i);
+        p.hidden = n !== i;
+      });
+    });
+  });
 })();

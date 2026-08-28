@@ -282,6 +282,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   position: relative;
   padding: var(--section-pad) 0;
   background:
+    radial-gradient(44% 50% at 74% 52%, rgba(255, 247, 231, .80) 0%, rgba(255, 247, 231, 0) 72%),
     radial-gradient(120% 90% at 82% 18%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 58%),
     linear-gradient(135deg, #FBF8F2 0%, var(--hero-ground) 52%, #E6DACB 100%);
   overflow: hidden;
@@ -1070,12 +1071,46 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   from{ opacity: 0; }
   to  { opacity: 1; }
 }
-.hero__copy > .eyebrow   { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .30s both; }
-.hero__title             { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .45s both; }
-.hero__copy > .hero__text{ animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .60s both; }
-.hero__actions           { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .75s both; }
-.hero__copy > .rating    { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .90s both; }
-.hero__media             { animation: heroFade 1.2s ease .45s both; }
+/* the headline is the one element that gets its own move: it wipes upward
+   from behind its own baseline instead of fading, which is what stops the
+   cascade reading as five identical fades */
+@keyframes heroReveal{
+  from{ opacity: 0; transform: translateY(26px); clip-path: inset(0 0 100% 0); }
+  to  { opacity: 1; transform: none;             clip-path: inset(0 0 -14% 0); }
+}
+/* the gold rule draws itself out from the text */
+@keyframes heroRule{
+  from{ width: 0; }
+  to  { width: 22px; }
+}
+/* the still life descends and settles, pivoting on its own base, while its
+   shadow blooms underneath — an object landing rather than a picture fading */
+@keyframes heroSettle{
+  from{
+    opacity: 0;
+    transform: translateY(-18px) scale(1.035);
+    filter: drop-shadow(0 10px 20px rgba(35, 40, 28, .05));
+  }
+  to{
+    opacity: 1;
+    transform: none;
+    filter: drop-shadow(0 34px 54px rgba(35, 40, 28, .18));
+  }
+}
+/* and then it simply breathes, so the hero is never completely dead */
+@keyframes heroFloat{
+  0%, 100%{ transform: translateY(0); }
+  50%     { transform: translateY(-7px); }
+}
+
+.hero__copy > .eyebrow          { animation: heroUp .9s cubic-bezier(.22,.61,.36,1) .28s both; }
+.hero__copy > .eyebrow::before  { animation: heroRule .7s cubic-bezier(.22,.61,.36,1) .52s both; }
+.hero__title                    { animation: heroReveal 1.15s cubic-bezier(.22,.61,.36,1) .40s both; }
+.hero__copy > .hero__text       { animation: heroUp .95s cubic-bezier(.22,.61,.36,1) .62s both; }
+.hero__actions                  { animation: heroUp .9s cubic-bezier(.22,.61,.36,1) .80s both; }
+.hero__copy > .rating           { animation: heroUp .9s cubic-bezier(.22,.61,.36,1) .94s both; }
+.hero__photo                    { animation: heroSettle 1.3s cubic-bezier(.22,.61,.36,1) .50s both; }
+.hero__media                    { animation: heroFloat 8s ease-in-out 2.2s infinite; }
 
 /* the icon strip continues the hero cascade rather than waiting on scroll:
    it sits right under the fold, so the observer would have shown it flat */

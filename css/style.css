@@ -200,7 +200,9 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .logo__mark{
   width: auto;
   height: 46px;
+  transition: transform .45s cubic-bezier(.22, .61, .36, 1);
 }
+.logo:hover .logo__mark{ transform: scale(1.07); }
 .logo__name{
   font-family: var(--serif);
   font-weight: 500;
@@ -219,14 +221,29 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   margin-left: auto;
 }
 .nav__link{
+  position: relative;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: .045em;
   text-transform: uppercase;
   color: var(--dark);
   white-space: nowrap;
+  transition: color .25s ease;
+}
+.nav__link::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 1px;
+  background: var(--sage);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .32s cubic-bezier(.22, .61, .36, 1);
 }
 .nav__link:hover{ color: var(--sage-dark); }
+.nav__link:hover::after{ transform: scaleX(1); }
 
 /* Drawer trigger + dimmer — desktop keeps both out of the document */
 .nav-toggle,
@@ -257,7 +274,12 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   gap: 30px;
   color: var(--dark);
 }
-.icon-btn{ display: block; line-height: 0; }
+.icon-btn{
+  display: block;
+  line-height: 0;
+  transition: color .25s ease, transform .25s cubic-bezier(.22, .61, .36, 1);
+}
+.icon-btn:hover{ color: var(--sage-dark); transform: translateY(-2px); }
 .cart{ position: relative; }
 .cart__badge{
   position: absolute;
@@ -1062,6 +1084,22 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
               transform .7s cubic-bezier(.22, .61, .36, 1);
 }
 
+/* --- the header assembles first and hands off to the hero --- */
+@keyframes headerDrop{
+  from{ opacity: 0; transform: translateY(-12px); }
+  to  { opacity: 1; transform: none; }
+}
+.announcement    { animation: headerDrop .55s cubic-bezier(.22,.61,.36,1) 0s both; }
+.logo            { animation: headerDrop .6s cubic-bezier(.22,.61,.36,1) .08s both; }
+.nav__link       { animation: headerDrop .55s cubic-bezier(.22,.61,.36,1) both; }
+.nav__link:nth-child(1){ animation-delay: .16s; }
+.nav__link:nth-child(2){ animation-delay: .21s; }
+.nav__link:nth-child(3){ animation-delay: .26s; }
+.nav__link:nth-child(4){ animation-delay: .31s; }
+.nav__link:nth-child(5){ animation-delay: .36s; }
+.header__actions { animation: headerDrop .55s cubic-bezier(.22,.61,.36,1) .42s both; }
+.nav-toggle      { animation: headerDrop .55s cubic-bezier(.22,.61,.36,1) .42s both; }
+
 /* --- hero cascades in on load, no JS needed --- */
 @keyframes heroUp{
   from{ opacity: 0; transform: translateY(26px); }
@@ -1215,6 +1253,9 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
     letter-spacing: .06em;
     border-bottom: 1px solid var(--hairline);
   }
+  /* the drawer rows already have a divider — the hover underline would
+     double it up, and the links are stacked so it reads as a mistake */
+  .nav__link::after{ display: none; }
   body.nav-open{ overflow: hidden; }
   body.nav-open .nav{ transform: none; }
   body.nav-open .nav-backdrop{ opacity: 1; visibility: visible; }

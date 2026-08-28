@@ -1026,6 +1026,14 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .hero__copy > .rating    { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .90s both; }
 .hero__media             { animation: heroFade 1.2s ease .45s both; }
 
+/* the icon strip continues the hero cascade rather than waiting on scroll:
+   it sits right under the fold, so the observer would have shown it flat */
+.usp__col                  { animation: heroUp .9s cubic-bezier(.22,.61,.36,1) both; }
+.usp__col:nth-child(1)     { animation-delay: 1.00s; }
+.usp__col:nth-child(2)     { animation-delay: 1.14s; }
+.usp__col:nth-child(3)     { animation-delay: 1.28s; }
+.usp__col:nth-child(4)     { animation-delay: 1.42s; }
+
 /* set by script.js when the visitor asks for reduced motion */
 .no-motion *,
 .no-motion *::before,

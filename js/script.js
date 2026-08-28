@@ -59,7 +59,6 @@
     document.documentElement.classList.add('no-motion');
   } else if ('IntersectionObserver' in window) {
     var targets = document.querySelectorAll(
-      '.usp__col,' +
       '.story__text, .story__media,' +
       '.highlight__text, .highlight__media, .specs__item,' +
       '.section-eyebrow, .section-title, .section-lead,' +

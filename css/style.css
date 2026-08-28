@@ -11,6 +11,12 @@
 :root{
   --container: 1220px;
   --section-pad: 50px;
+  --radius: 5px;
+
+  /* one rhythm for every section */
+  --gap-eyebrow: 16px;   /* eyebrow  -> title   */
+  --gap-title:   34px;   /* title    -> content */
+  --gap-item:    18px;   /* inside a single item */
 
   /* Brand palette — Casa Salento (developservice.de/casa-salento) */
   --sage:       #8A9A78;   /* primary — solid buttons, active accents */
@@ -25,6 +31,7 @@
   --hairline:   #E9E4D2;   /* rules, card borders */
   --hairline-2: #D8D2BC;   /* stronger rule */
   --white:      #FFFFFF;
+  --hero-ground:#EEE4DB;   /* matches the hero photo's own backdrop */
 
   --serif: "Playfair Display", Georgia, "Times New Roman", serif;
   --sans:  "Poppins", "Helvetica Neue", Arial, sans-serif;
@@ -43,8 +50,8 @@ body{
 }
 
 img { display: block; max-width: 100%; }
-h1,h2,h3,h4,p,ul { margin: 0; }
-ul { list-style: none; padding: 0; }
+h1,h2,h3,h4,p,ul,ol { margin: 0; }
+ul, ol { list-style: none; padding: 0; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
 
@@ -67,6 +74,12 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   letter-spacing: .17em;
 }
 
+.section-eyebrow{
+  margin: 0 0 var(--gap-eyebrow);
+  text-align: center;
+  color: var(--kicker);
+}
+
 .section-title{
   font-family: var(--serif);
   font-size: 30px;
@@ -87,7 +100,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   font-weight: 500;
   letter-spacing: .13em;
   text-transform: uppercase;
-  border-radius: 0;
+  border-radius: var(--radius);
   white-space: nowrap;
 }
 .btn--solid{ background: var(--sage); color: var(--white); }
@@ -102,7 +115,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .btn--highlight{ height: 44px; width: 178px; font-size: 11px; }
 .btn--cart{ height: 33px; width: 211px; font-size: 10px; letter-spacing: .12em; }
 .btn--icard{ height: 36px; width: 148px; font-size: 10px; }
-.btn--news{ height: 48px; width: 179px; font-size: 11px; }
+.btn--news{ height: 52px; width: 186px; font-size: 11px; border-radius: 0; }
 
 /* ==========================================================================
    Announcement bar
@@ -126,67 +139,60 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
    Header
    ========================================================================== */
 .header{
-  height: 109px;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  height: 86px;
   background: var(--white);
+  transition: box-shadow .22s ease;
+}
+.header.is-stuck{ box-shadow: 0 2px 16px rgba(35, 40, 28, .10); }
+.header__inner{
+  width: var(--container);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
   display: flex;
   align-items: center;
-  padding: 0 62px 0 66px;
 }
 
 .logo{
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 33px;
-  line-height: 31px;
-  letter-spacing: .085em;
-  text-transform: uppercase;
-  color: var(--dark);
-  text-align: center;
-  display: block;
-}
-.logo__line{ display: block; }
-
-.nav{
   display: flex;
   align-items: center;
-  gap: 64px;
-  margin-left: 190px;
+  gap: 13px;
+  flex: none;
 }
-.nav__item{ position: relative; }
-.nav__link{
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 0;
-  font-size: 10.5px;
+.logo__mark{
+  width: auto;
+  height: 46px;
+}
+.logo__name{
+  font-family: var(--serif);
   font-weight: 500;
-  letter-spacing: .085em;
+  font-size: 21px;
+  line-height: 1;
+  letter-spacing: .075em;
   text-transform: uppercase;
   color: var(--dark);
   white-space: nowrap;
 }
-.caret{ margin-top: 2px; }
 
-.submenu{
-  position: absolute;
-  top: 30px;
-  left: -18px;
-  min-width: 200px;
-  background: var(--white);
-  border: 1px solid var(--hairline);
-  padding: 10px 0;
-  display: none;
-  z-index: 30;
+.nav{
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  margin-left: auto;
 }
-.nav__item.is-open .submenu{ display: block; }
-.submenu a{
-  display: block;
-  padding: 8px 18px;
-  font-size: 12px;
-  font-weight: 300;
-  color: var(--muted);
+.nav__link{
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+  color: var(--dark);
+  white-space: nowrap;
 }
-.submenu a:hover{ background: var(--cream); color: var(--sage-dark); }
+.nav__link:hover{ color: var(--sage-dark); }
+
 
 .header__actions{
   margin-left: auto;
@@ -218,29 +224,29 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
    ========================================================================== */
 .hero{
   position: relative;
-  height: 727px;
-  background: var(--cream);
+  height: 640px;
+  background: var(--hero-ground);
   overflow: hidden;
 }
 .hero__photo{
   position: absolute;
-  top: 0;
   right: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 50%;
+  bottom: 0;
+  width: auto;
+  height: 600px;
 }
 .hero__inner{
   position: relative;
   z-index: 2;
-  padding: 131px 0 0 90px;
+  width: var(--container);
+  margin: 0 auto;
+  padding: 112px 20px 0;
 }
 .hero__title{
   font-family: var(--serif);
-  font-size: 58px;
+  font-size: 45px;
   font-weight: 400;
-  line-height: 70px;
+  line-height: 55px;
   letter-spacing: 0;
   color: var(--dark);
   margin: 16px 0 0;
@@ -284,40 +290,40 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .usp__grid{
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 .usp__col{
   position: relative;
   text-align: center;
-  padding: 0 11px;
+  padding: 0 30px;
 }
 .usp__col::after{
   content: "";
   position: absolute;
   right: 0;
-  top: 59px;
-  height: 100px;
+  top: 62px;
+  height: 108px;
   width: 1px;
   background: var(--hairline);
 }
 .usp__col:last-child::after{ display: none; }
 .usp__icon{ display: block; color: var(--kicker); line-height: 0; }
-.usp__icon svg{ margin: 0 auto; width: 45px; height: 45px; }
-.usp__icon--gold{ color: var(--gold); }
+.usp__icon svg{ margin: 0 auto; width: 50px; height: 50px; }
 .usp__title{
-  margin-top: 30px;
-  font-size: 15.5px;
+  margin-top: 26px;
+  min-height: 2.7em;      /* two title lines, so every body line-up matches */
+  font-size: 17px;
   font-weight: 600;
-  letter-spacing: .105em;
+  letter-spacing: .07em;
   line-height: 1.35;
   text-transform: uppercase;
   color: var(--dark);
 }
 .usp__text{
-  margin-top: 11px;
-  font-size: 11.5px;
+  margin-top: 13px;
+  font-size: 14px;
   font-weight: 300;
-  line-height: 22px;
+  line-height: 24px;
   color: var(--muted);
 }
 
@@ -325,15 +331,16 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
    Story
    ========================================================================== */
 .story{
-  background: var(--white);
+  background: var(--cream);
   padding: var(--section-pad) 0;
 }
 .story__grid{
   display: grid;
-  grid-template-columns: 448px 772px;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
 }
-.story__text{ padding-top: 30px; }
+.story__text{ padding-right: 10px; }
 .story__title{
   margin-top: 20px;
   font-family: var(--serif);
@@ -344,26 +351,28 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .story__body{
   margin-top: 20px;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 300;
-  line-height: 26.5px;
+  line-height: 28px;
   color: var(--muted);
 }
 .btn--story{ margin-top: 26px; }
 .story__media img{
-  width: 772px;
-  height: 421px;
+  width: 100%;
+  height: 420px;
+  border-radius: var(--radius);
   object-fit: cover;
-  object-position: 50% 52%;
+  object-position: 50% 55%;
 }
 
 /* ==========================================================================
    Product highlight
    ========================================================================== */
 .highlight{
-  background: var(--cream);
+  position: relative;
+  z-index: 2;          /* the bottle paints over the section above */
+  background: var(--white);
   padding: var(--section-pad) 0;
-  overflow: hidden;
 }
 .highlight__inner{
   position: relative;
@@ -375,15 +384,18 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .highlight__media{
   position: relative;
+  align-self: stretch;       /* the absolute image needs a full-height box */
   margin-left: -71px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding-left: 118px;
 }
 .highlight__media img{
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: -44px;             /* settles into the section's lower padding */
+  transform: translateX(-50%);
   width: auto;
-  height: 386px;
+  height: 545px;             /* taller than the band, so the cap rises above it */
 }
 .highlight__text{ padding-right: 24px; }
 .highlight__title{
@@ -455,21 +467,23 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .products__grid{
   width: 1090px;
-  margin: 36px auto 0;
+  margin: var(--gap-title) auto 0;
   display: grid;
   grid-template-columns: repeat(3, 338px);
   gap: 20px 38px;
 }
 .pcard{
   width: 338px;
-  height: 440px;
+  height: 424px;
+  border-radius: var(--radius);
+  overflow: hidden;
   border: 1px solid var(--hairline);
   background: var(--white);
   display: flex;
   flex-direction: column;
 }
 .pcard__media{
-  height: 237px;
+  height: 250px;
   background: var(--cream);
   display: flex;
   align-items: center;
@@ -486,7 +500,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .pcard__body{
   flex: 1;
-  padding: 17px 20px 0;
+  padding: 20px 20px 0;
   text-align: center;
 }
 .pcard__cat{
@@ -513,7 +527,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   font-weight: 600;
   color: var(--dark);
 }
-.btn--cart{ margin-top: 18px; }
+.btn--cart{ margin-top: var(--gap-item); }
 
 /* ==========================================================================
    Values ("Was du an Casa Salento liebst")
@@ -522,46 +536,53 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   background: var(--offwhite);
   padding: var(--section-pad) 0;
 }
-.values .section-title{ font-size: 33px; }
 .values__box{
-  border-left: 1px solid var(--hairline);
-  border-right: 1px solid var(--hairline);
-  padding: 26px 0 34px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  padding: 44px 40px 46px;
 }
-.values__grid{
-  margin-top: 29px;
+
+/* --- process timeline --- */
+.steps{
+  position: relative;
+  margin-top: var(--gap-title);
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  padding: 0 34px;
 }
-.values__col{ text-align: center; padding: 0 2px; }
-.values__icon{
+.steps::before{
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: var(--hairline);
+}
+.steps__item{ position: relative; text-align: center; padding: 0 16px; }
+.steps__icon{
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border: 1px solid var(--sage);
   border-radius: 50%;
+  background: var(--offwhite);
   color: var(--kicker);
 }
-.values__icon svg{ width: 28px; height: 28px; }
-.values__title{
-  display: block;
-  width: fit-content;
-  margin: 23px auto 0;
-  padding: 0 7px 7px;
-  border-bottom: 1px solid var(--hairline-2);
-  font-size: 12.5px;
+.steps__icon svg{ width: 27px; height: 27px; }
+.steps__title{
+  margin-top: var(--gap-item);
+  font-size: 13px;
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: .095em;
-  text-transform: uppercase;
+  letter-spacing: .02em;
   color: var(--dark);
 }
-.values__text{
-  margin-top: 4px;
-  font-size: 13.7px;
+.steps__text{
+  margin-top: 7px;
+  font-size: 13px;
   font-weight: 300;
   line-height: 21px;
   color: var(--muted);
@@ -575,26 +596,28 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   padding: var(--section-pad) 0;
 }
 .inspiration__grid{
-  margin-top: 27px;
+  margin-top: var(--gap-title);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 .icard{
+  border-radius: var(--radius);
+  overflow: hidden;
   background: var(--cream);
   display: flex;
   flex-direction: column;
 }
 .icard__img{
   width: 100%;
-  height: 190px;
+  height: 258px;
   object-fit: cover;
   object-position: 50% 50%;
 }
 .icard__img--trulli{ object-position: 50% 55%; }
 .icard__img--anti{ object-position: 50% 55%; }
 .icard__body{
-  padding: 14px 24px 18px;
+  padding: 22px 24px 26px;
   text-align: center;
 }
 .icard__title{
@@ -610,7 +633,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   line-height: 20px;
   color: var(--muted);
 }
-.btn--icard{ margin-top: 18px; }
+.btn--icard{ margin-top: var(--gap-item); }
 
 /* ==========================================================================
    Newsletter
@@ -623,65 +646,62 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .newsletter__branch{
   position: absolute;
-  left: 4px;
+  left: -14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 226px;
-  height: 168px;
-  object-fit: contain;
-  object-position: 50% 50%;
+  width: 248px;
+  height: auto;
 }
 .newsletter__inner{
   position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
-  padding-left: 152px;
+  justify-content: space-between;
+  gap: 60px;
+  padding-left: 216px;
 }
+.newsletter__eyebrow{ margin-bottom: var(--gap-eyebrow); color: var(--kicker); }
 .newsletter__title{
   font-family: var(--serif);
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1.14;
   color: var(--dark);
 }
 .newsletter__lead{
-  margin-top: 15px;
-  font-size: 14px;
+  margin-top: 14px;
+  max-width: 430px;
+  font-size: 15px;
   font-weight: 300;
+  line-height: 26px;
   color: var(--muted);
 }
-.newsletter__sub{
-  margin-top: 9px;
-  font-size: 11px;
-  font-weight: 300;
-  color: var(--kicker);
-}
-.newsletter__form{
-  position: relative;
-  margin-left: auto;
-  margin-right: 122px;
+.newsletter__form{ flex: none; }
+.newsletter__control{
   display: flex;
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 .newsletter__input{
-  width: 281px;
-  height: 48px;
+  border-radius: 0;
+  width: 300px;
+  height: 52px;
   border: 0;
   background: var(--white);
   padding: 0 20px;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 300;
-  color: var(--muted);
+  color: var(--dark);
 }
 .newsletter__input::placeholder{ color: var(--kicker); }
 .newsletter__input:focus{ outline: 1px solid var(--sage); outline-offset: -1px; }
 .newsletter__note{
-  position: absolute;
-  top: 54px;
-  left: 0;
-  font-size: 12px;
-  color: var(--green);
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--sage-dark);
 }
 
 /* ==========================================================================
@@ -725,58 +745,79 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .footer{ background: var(--dark); color: var(--cream); }
 .footer__grid{
   display: grid;
-  grid-template-columns: 297px 243px 254px 253px auto;
-  padding: var(--section-pad) 0;
+  grid-template-columns: 1.55fr 1fr 1fr 1fr 1fr;
+  gap: 46px;
+  padding: var(--section-pad) 0 44px;
 }
+
+.footer__brand{ padding-right: 46px; }
 .footer__logo{
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 19px;
-  line-height: 19px;
-  letter-spacing: .045em;
-  text-transform: uppercase;
-  color: var(--cream);
-  text-align: center;
-  width: 152px;
+  width: 224px;
+  height: auto;
 }
 .footer__desc{
-  margin-top: 22px;
-  font-size: 11.5px;
+  margin-top: 26px;
+  font-size: 14px;
   font-weight: 300;
-  line-height: 15px;
-  color: rgba(247,244,235,.72);
+  line-height: 26px;
+  color: rgba(247, 244, 235, .74);
 }
-.footer__social{
-  margin-top: 10px;
-  display: flex;
-  gap: 18px;
-  color: var(--cream);
-}
-.footer__social svg{ width: 19px; height: 19px; }
+
 .footer__head{
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: .01em;
   color: var(--cream);
 }
-.footer__col ul{ margin-top: 6px; }
-.footer__col li + li{ margin-top: 2px; }
+.footer__head::after{
+  content: "";
+  display: block;
+  width: 34px;
+  height: 1px;
+  margin-top: 12px;
+  background: rgba(247, 244, 235, .34);
+}
+.footer__col ul{ margin-top: var(--gap-item); }
+.footer__col li + li{ margin-top: 12px; }
 .footer__col a{
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 300;
-  color: rgba(247,244,235,.78);
+  color: rgba(247, 244, 235, .80);
+  transition: color .15s ease;
 }
 .footer__col a:hover{ color: var(--white); }
 
+/* --- bottom bar --- */
 .footer__bottom{
-  border-top: 1px solid rgba(255,255,255,.13);
-  background: var(--dark-deep);
-  padding: 15px 0;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 24px 0 30px;
+  border-top: 1px solid rgba(247, 244, 235, .16);
 }
-.footer__bottom p{
-  font-size: 11.5px;
+.pay{ display: flex; align-items: center; gap: 10px; }
+.pay__item{
+  width: 48px;
+  height: 30px;
+  border-radius: 4px;
+  background: var(--cream);
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pay__item svg{ width: 100%; height: 100%; }
+.footer__legal{ display: flex; gap: 30px; }
+.footer__legal a{
+  font-size: 13px;
   font-weight: 300;
-  color: rgba(238,235,225,.62);
+  color: rgba(247, 244, 235, .78);
+}
+.footer__legal a:hover{ color: var(--white); }
+.footer__copy{
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(247, 244, 235, .62);
 }

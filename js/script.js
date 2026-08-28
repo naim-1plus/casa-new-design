@@ -2,32 +2,6 @@
 (function () {
   'use strict';
 
-  /* --- Header dropdowns --- */
-  var items = Array.prototype.slice.call(document.querySelectorAll('.nav__item.has-sub'));
-
-  function closeAll(except) {
-    items.forEach(function (item) {
-      if (item === except) return;
-      item.classList.remove('is-open');
-      item.querySelector('.nav__link').setAttribute('aria-expanded', 'false');
-    });
-  }
-
-  items.forEach(function (item) {
-    var trigger = item.querySelector('.nav__link');
-    trigger.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var open = item.classList.toggle('is-open');
-      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      closeAll(item);
-    });
-  });
-
-  document.addEventListener('click', function () { closeAll(null); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeAll(null);
-  });
-
   /* --- Cart badge --- */
   var badge = document.getElementById('cartCount');
   document.querySelectorAll('.btn--cart').forEach(function (btn) {
@@ -47,5 +21,19 @@
       note.hidden = false;
       form.reset();
     });
+  }
+
+  /* --- Sticky header shadow (announcement bar scrolls away first) --- */
+  var header = document.querySelector('.header');
+  var bar = document.querySelector('.announcement');
+  if (header) {
+    var trigger = bar ? bar.offsetHeight : 0;
+    var stuck = false;
+    var sync = function () {
+      var now = window.scrollY > trigger;
+      if (now !== stuck) { stuck = now; header.classList.toggle('is-stuck', now); }
+    };
+    window.addEventListener('scroll', sync, { passive: true });
+    sync();
   }
 })();

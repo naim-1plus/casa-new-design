@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Casa Salento – Authentische Spezialitäten aus Apulien</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +24,7 @@
     <span class="logo__name">Casa Salento</span>
   </a>
 
-  <nav class="nav" aria-label="Hauptnavigation">
+  <nav class="nav" id="siteNav" aria-label="Hauptnavigation">
     <a class="nav__link" href="#">Shop</a>
     <a class="nav__link" href="#">Sortiment</a>
     <a class="nav__link" href="#">Unsere Geschichte</a>
@@ -43,7 +44,18 @@
       <span class="cart__badge" id="cartCount">0</span>
     </a>
   </div>
+
+  <button class="nav-toggle" id="navToggle" type="button"
+          aria-label="Menü öffnen" aria-expanded="false" aria-controls="siteNav">
+    <span class="nav-toggle__bar"></span>
+    <span class="nav-toggle__bar"></span>
+    <span class="nav-toggle__bar"></span>
+  </button>
   </div>
+
+  <!-- dimmer for the mobile drawer; lives inside the header so it shares
+       the header's stacking context and stays underneath the panel -->
+  <div class="nav-backdrop" id="navBackdrop"></div>
 </header>
 
 <main>
@@ -53,8 +65,8 @@
   <div class="container hero__inner">
     <div class="hero__copy">
     <p class="eyebrow">Natürlich. Echt. Aus Apulien.</p>
-    <h1 class="hero__title">Die Seele Apuliens,<br>direkt in dein Zuhause.</h1>
-    <p class="hero__text">Von sonnenverwöhnten Olivenhainen bis zu deiner<br>Küche – entdecke authentische Spezialitäten,<br>traditionell gefertigt und voller Geschmack.</p>
+    <h1 class="hero__title">Die Seele Apuliens, <br>direkt in dein Zuhause.</h1>
+    <p class="hero__text">Von sonnenverwöhnten Olivenhainen bis zu deiner <br>Küche – entdecke authentische Spezialitäten, <br>traditionell gefertigt und voller Geschmack.</p>
     <div class="hero__actions">
       <a href="#specialties" class="btn btn--solid btn--hero">Jetzt entdecken</a>
       <a href="#story" class="btn btn--outline btn--hero">Mehr über uns</a>
@@ -157,9 +169,9 @@
     </div>
     <div class="highlight__text">
       <p class="eyebrow eyebrow--sm">Unser Highlight</p>
-      <h2 class="highlight__title">Natives Olivenöl Extra –<br>Nocellara del Gargaño</h2>
-      <p class="highlight__body">Fruchtig, mild und reich an Polyphenolen.<br>Kalt extrahiert aus 100 % italienischen</p>
-      <p class="highlight__body">Oliven – für höchsten Genuss<br>und beste Qualität.</p>
+      <h2 class="highlight__title">Natives Olivenöl Extra – <br>Nocellara del Gargaño</h2>
+      <p class="highlight__body">Fruchtig, mild und reich an Polyphenolen. <br>Kalt extrahiert aus 100 % italienischen</p>
+      <p class="highlight__body">Oliven – für höchsten Genuss <br>und beste Qualität.</p>
       <div class="highlight__buy">
         <div class="highlight__price">
           <span class="price">24,90 €</span>
@@ -446,7 +458,7 @@
       <img class="icard__img icard__img--trulli" src="assets/images/insp-trulli.jpg" alt="Trulli in der apulischen Landschaft">
       <div class="icard__body">
         <h3 class="icard__title">Die schönsten Orte Apuliens</h3>
-        <p class="icard__text">Entdecke die Magie unserer<br>Heimat und lass dich inspirieren.</p>
+        <p class="icard__text">Entdecke die Magie unserer <br>Heimat und lass dich inspirieren.</p>
         <a href="#" class="btn btn--solid btn--icard">Mehr erfahren</a>
       </div>
     </article>
@@ -454,7 +466,7 @@
       <img class="icard__img" src="assets/images/insp-bread.jpg" alt="Rustikales Brot mit apulischem Olivenöl">
       <div class="icard__body">
         <h3 class="icard__title">Rezepte mit apulischem Olivenöl</h3>
-        <p class="icard__text">Einfache, authentische Rezepte<br>für jeden Tag.</p>
+        <p class="icard__text">Einfache, authentische Rezepte <br>für jeden Tag.</p>
         <a href="#" class="btn btn--solid btn--icard">Zu den Rezepten</a>
       </div>
     </article>
@@ -462,7 +474,7 @@
       <img class="icard__img icard__img--anti" src="assets/images/insp-antipasti.jpg" alt="Antipasti mit Oliven und Tomaten">
       <div class="icard__body">
         <h3 class="icard__title">Antipasti – klein, aber besonders</h3>
-        <p class="icard__text">Kleine Köstlichkeiten, die jeden<br>Moment veredeln.</p>
+        <p class="icard__text">Kleine Köstlichkeiten, die jeden <br>Moment veredeln.</p>
         <a href="#" class="btn btn--solid btn--icard">Mehr erfahren</a>
       </div>
     </article>

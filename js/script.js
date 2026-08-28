@@ -37,6 +37,33 @@
     sync();
   }
 
+  /* --- Mobile navigation drawer --- */
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('siteNav');
+  var backdrop = document.getElementById('navBackdrop');
+  if (toggle && nav) {
+    var setNav = function (open) {
+      document.body.classList.toggle('nav-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Men\u00fc schlie\u00dfen' : 'Men\u00fc \u00f6ffnen');
+    };
+    toggle.addEventListener('click', function () {
+      setNav(!document.body.classList.contains('nav-open'));
+    });
+    if (backdrop) { backdrop.addEventListener('click', function () { setNav(false); }); }
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('.nav__link')) { setNav(false); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setNav(false); }
+    });
+    // a drawer left open while the layout grows back to desktop would strand
+    // the scroll lock, so close it at the breakpoint
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', function (e) {
+      if (e.matches) { setNav(false); }
+    });
+  }
+
   /* --- "Unsere Geschichte" five-station story --- */
   var dots = Array.prototype.slice.call(document.querySelectorAll('.gsteps__dot'));
   var panels = Array.prototype.slice.call(document.querySelectorAll('.gpanel'));
@@ -58,6 +85,14 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.classList.add('no-motion');
   } else if ('IntersectionObserver' in window) {
+    // on desktop the icon strip runs a CSS load cascade (it sits just under the
+    // fold); once the layout stacks it is far below, so hand it to the observer
+    var uspSelector = '';
+    if (window.matchMedia('(max-width: 1023px)').matches) {
+      document.documentElement.classList.add('usp-scroll');
+      uspSelector = ', .usp__col';
+    }
+
     var targets = document.querySelectorAll(
       '.story__text, .story__media,' +
       '.highlight__text, .highlight__media, .specs__item,' +
@@ -65,7 +100,7 @@
       '.pcard, .steps__item, .wcard,' +
       '.geschichte__media, .geschichte__story,' +
       '.icard, .newsletter__text, .newsletter__form,' +
-      '.trust__item, .footer__brand, .footer__col'
+      '.trust__item, .footer__brand, .footer__col' + uspSelector
     );
 
     var io = new IntersectionObserver(function (entries) {

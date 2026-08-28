@@ -98,6 +98,9 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 
 .section-eyebrow{
+  /* block-level flex: .eyebrow is inline-flex, which shrink-wraps and would
+     sit at the left edge — text-align on the element itself cannot centre it */
+  display: flex;
   margin: 0 0 var(--gap-eyebrow);
   justify-content: center;
   text-align: center;

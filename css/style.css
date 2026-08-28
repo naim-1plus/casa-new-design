@@ -1297,6 +1297,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   /* desktop line breaks would land mid-phrase at this width */
   .hero__title br,
   .hero__text br,
+  .usp__title br,
   .highlight__title br,
   .highlight__body br,
   .icard__text br{ display: none; }
@@ -1363,8 +1364,9 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   .newsletter__lead{ font-size: 14px; line-height: 24px; }
 
   /* ---- trust ---- */
-  .trust__grid{ grid-template-columns: 1fr; gap: 22px; max-width: 380px; margin-left: auto; margin-right: auto; }
-  .trust__item{ justify-content: flex-start; }
+  .trust__grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 16px; max-width: 420px; margin-left: auto; margin-right: auto; }
+  .trust__item{ flex-direction: column; justify-content: flex-start; text-align: center; gap: 10px; }
+  .trust__icon svg{ width: 28px; height: 28px; }
 
   /* ---- footer ---- */
   .footer__grid{ grid-template-columns: 1fr 1fr; gap: 30px 24px; padding-bottom: 34px; }
@@ -1392,8 +1394,16 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   .btn--hero.btn--outline{ width: 100%; max-width: 300px; }
   .rating{ flex-wrap: wrap; gap: 8px; }
 
-  .specs{ grid-template-columns: 1fr; max-width: 250px; margin-left: auto; margin-right: auto; }
-  .steps__item{ flex-basis: 100%; }
+  /* both stay two-up — tightened so the pairs still fit */
+  .specs{ gap: 16px 12px; }
+  .specs__item{ gap: 10px; }
+  .specs__icon svg{ width: 28px; height: 28px; }
+  .specs__label{ font-size: 13px; line-height: 19px; }
+  .steps__item{ padding: 0 6px; }
+  .steps__title{ font-size: 12.5px; }
+  .steps__text{ font-size: 12.5px; line-height: 20px; }
+  .trust__label{ font-size: 10.5px; line-height: 16px; }
+  .trust__label strong{ font-size: 11px; letter-spacing: .07em; }
 
   .values__box{ padding: 22px 14px 26px; }
   .geschichte__box{ padding: 22px 14px 26px; }

@@ -995,15 +995,42 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 
 /* ==========================================================================
-   Scroll reveal — the .reveal class is applied by script.js, so the page
-   stays fully visible when JavaScript is unavailable.
+   Motion — scroll reveal + hero entrance
+   Mirrors the reference build: .rv-init / .rv-on driven from script.js, so
+   the page stays fully visible when JavaScript is unavailable.
    ========================================================================== */
-.reveal{
+.rv-init{
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity .55s ease, transform .55s ease;
 }
-.reveal.is-visible{
-  opacity: 1;
-  transform: none;
+.rv-on{
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity .7s cubic-bezier(.22, .61, .36, 1),
+              transform .7s cubic-bezier(.22, .61, .36, 1);
 }
+
+/* --- hero cascades in on load, no JS needed --- */
+@keyframes heroUp{
+  from{ opacity: 0; transform: translateY(26px); }
+  to  { opacity: 1; transform: none; }
+}
+@keyframes heroFade{
+  from{ opacity: 0; }
+  to  { opacity: 1; }
+}
+.hero__copy > .eyebrow   { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .30s both; }
+.hero__title             { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .45s both; }
+.hero__copy > .hero__text{ animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .60s both; }
+.hero__actions           { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .75s both; }
+.hero__copy > .rating    { animation: heroUp 1s cubic-bezier(.22,.61,.36,1) .90s both; }
+.hero__media             { animation: heroFade 1.2s ease .45s both; }
+
+/* set by script.js when the visitor asks for reduced motion */
+.no-motion *,
+.no-motion *::before,
+.no-motion *::after{
+  animation: none !important;
+  transition: none !important;
+}
+.no-motion .rv-init{ opacity: 1; transform: none; }

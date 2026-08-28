@@ -10,6 +10,7 @@
 
 :root{
   --container: 1220px;
+  --gutter:    20px;   /* every shell: 1220 outer - 2x20 = 1180 of content */
   --section-pad: 80px;
   --radius: 5px;
 
@@ -60,8 +61,10 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
 
 .container{
-  width: var(--container);
+  width: 100%;
+  max-width: var(--container);
   margin: 0 auto;
+  padding: 0 var(--gutter);
 }
 
 /* ---------- Shared type ---------- */
@@ -183,10 +186,11 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .header.is-stuck{ box-shadow: 0 2px 16px rgba(35, 40, 28, .10); }
 .header__inner{
-  width: var(--container);
+  width: 100%;
+  max-width: var(--container);
   height: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 var(--gutter);
   display: flex;
   align-items: center;
 }
@@ -316,7 +320,6 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 40px;
-  padding: 0 20px;
 }
 .hero__copy{ max-width: 540px; }
 .hero__media{ display: flex; justify-content: flex-end; }
@@ -466,10 +469,12 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .highlight__inner{
   position: relative;
-  width: var(--container);
+  width: 100%;
+  max-width: var(--container);
   margin: 0 auto;
+  padding: 0 var(--gutter);
   display: grid;
-  grid-template-columns: 420px 550px 250px;
+  grid-template-columns: 400px minmax(0, 1fr) 250px;   /* 400 + 530 + 250 = 1180 */
   align-items: center;
 }
 .highlight__media{
@@ -555,14 +560,15 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   padding: var(--section-pad) 0;
 }
 .products__grid{
-  width: 1090px;
+  width: 100%;
+  max-width: var(--container);
   margin: var(--gap-title) auto 0;
+  padding: 0 var(--gutter);
   display: grid;
-  grid-template-columns: repeat(3, 338px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 38px;
 }
 .pcard{
-  width: 338px;
   min-height: 424px;
   border-radius: var(--radius);
   overflow: hidden;
@@ -887,10 +893,8 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 70px;
-  padding: 0 20px;
-  max-width: 1020px;
-  margin: 0 auto;
 }
 .newsletter__title{
   font-family: var(--serif);
@@ -954,6 +958,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
    Trust bar
    ========================================================================== */
 .trust{
+  display: none;            /* hidden for now — delete this line to bring it back */
   background: var(--white);
   padding: var(--section-pad) 0;
 }
@@ -993,7 +998,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   display: grid;
   grid-template-columns: 1.55fr 1fr 1fr 1fr 1fr;
   gap: 46px;
-  padding: var(--section-pad) 0 44px;
+  padding: var(--section-pad) var(--gutter) 44px;
 }
 
 .footer__brand{ padding-right: 46px; }
@@ -1040,7 +1045,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   align-items: center;
   justify-content: space-between;
   gap: 30px;
-  padding: 24px 0 30px;
+  padding: 24px var(--gutter) 30px;
   border-top: 1px solid rgba(247, 244, 235, .16);
 }
 .pay{ display: flex; align-items: center; gap: 10px; }
@@ -1179,29 +1184,12 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 @media (max-width: 1279px){
   :root{ --section-pad: 72px; }
 
-  .container,
-  .header__inner,
-  .highlight__inner{
-    width: 100%;
-    max-width: var(--container);
-    padding-left: 28px;
-    padding-right: 28px;
-  }
-  .hero__inner{ padding-left: 28px; padding-right: 28px; }
-  .newsletter__inner{ max-width: 1020px; padding-left: 28px; padding-right: 28px; }
-
-  /* card grids stop being pixel-pinned */
-  .products__grid{
-    width: 100%;
-    max-width: 1090px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .pcard{ width: auto; }
+  :root{ --gutter: 28px; }
 
   .highlight__inner{ grid-template-columns: 32% minmax(0, 1fr) 224px; }
   .highlight__media img{ height: 490px; }
   .highlight__text{ padding: 0 24px 0 6px; }
-  .newsletter__inner{ gap: 50px; }
+  .newsletter__inner{ gap: 48px; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1212,6 +1200,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
     --section-pad: 64px;
     --gap-title: 28px;
     --h2: 30px;
+    --gutter: 26px;
   }
 
   /* ---- header: the menu becomes a right-hand drawer ---- */
@@ -1313,7 +1302,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   .specs__label{ font-size: 14px; line-height: 21px; }
 
   /* ---- products ---- */
-  .products__grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 720px; gap: 24px; }
+  .products__grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: calc(720px + var(--gutter) * 2); gap: 24px; }
 
   /* ---- process timeline: flex so the short last row stays centred ---- */
   .values__box{ padding: 34px 24px 36px; }
@@ -1363,13 +1352,8 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
     --gap-title: 24px;
     --gap-block: 24px;
     --h2: 26px;
+    --gutter: 20px;
   }
-
-  .container,
-  .header__inner,
-  .highlight__inner,
-  .hero__inner,
-  .newsletter__inner{ padding-left: 20px; padding-right: 20px; }
 
   /* ---- announcement wraps rather than clipping ---- */
   .announcement{ height: auto; padding: 8px 18px; }
@@ -1433,7 +1417,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   .specs__item{ border: 0; padding: 0; justify-content: flex-start; }
 
   /* ---- products ---- */
-  .products__grid{ grid-template-columns: 1fr; max-width: 400px; gap: 20px; }
+  .products__grid{ grid-template-columns: 1fr; max-width: calc(400px + var(--gutter) * 2); gap: 20px; }
   .pcard__media{ height: 220px; }
 
   /* ---- process ---- */
@@ -1486,13 +1470,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
    ≤479px — small phones
    -------------------------------------------------------------------------- */
 @media (max-width: 479px){
-  :root{ --section-pad: 48px; --h2: 24px; }
-
-  .container,
-  .header__inner,
-  .highlight__inner,
-  .hero__inner,
-  .newsletter__inner{ padding-left: 16px; padding-right: 16px; }
+  :root{ --section-pad: 48px; --h2: 24px; --gutter: 16px; }
 
   .hero__title{ font-size: 27px; line-height: 35px; }
   .hero__actions{ flex-direction: column; align-items: center; }

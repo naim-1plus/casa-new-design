@@ -53,4 +53,30 @@
       });
     });
   });
+
+  /* --- Scroll reveal: a short fade and rise, once per element --- */
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced && 'IntersectionObserver' in window) {
+    var targets = document.querySelectorAll(
+      '.hero__copy, .hero__media, .usp__col, .story__text, .story__media,' +
+      '.highlight__text, .highlight__media, .specs__item,' +
+      '.section-eyebrow, .section-title, .section-lead,' +
+      '.pcard, .steps__item, .wcard, .geschichte__box, .icard,' +
+      '.newsletter__text, .newsletter__form, .trust__item'
+    );
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+    Array.prototype.forEach.call(targets, function (el, i) {
+      el.classList.add('reveal');
+      // a light stagger inside grids, capped so nothing lags
+      el.style.transitionDelay = (i % 6) * 55 + 'ms';
+      io.observe(el);
+    });
+  }
 })();

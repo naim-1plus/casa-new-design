@@ -19,6 +19,9 @@
   --gap-item:    18px;   /* inside a single item */
   --gap-block:   30px;   /* between stacked blocks */
 
+  --h2:          34px;   /* every section heading */
+  --h2-lh:       1.2;
+
   /* Brand palette — Casa Salento (developservice.de/casa-salento) */
   --sage:       #8A9A78;   /* primary — solid buttons, active accents */
   --sage-dark:  #75855F;   /* hover / deeper sage */
@@ -63,15 +66,14 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 
 /* ---------- Shared type ---------- */
 .eyebrow{
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 400;
   letter-spacing: .185em;
   line-height: 1;
   text-transform: uppercase;
   color: var(--dark);
 }
 .eyebrow--sm{
-  font-size: 12px;
   letter-spacing: .17em;
 }
 
@@ -93,9 +95,9 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 
 .section-title{
   font-family: var(--serif);
-  font-size: 30px;
+  font-size: var(--h2);
   font-weight: 400;
-  line-height: 1.24;
+  line-height: var(--h2-lh);
   letter-spacing: .002em;
   color: var(--dark);
   text-align: center;
@@ -196,7 +198,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .nav__link{
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: .045em;
   text-transform: uppercase;
   color: var(--dark);
@@ -357,11 +359,11 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .story__text{ padding-right: 10px; }
 .story__title{
-  margin-top: 20px;
+  margin-top: var(--gap-eyebrow);
   font-family: var(--serif);
-  font-size: 40px;
+  font-size: var(--h2);
   font-weight: 400;
-  line-height: 1.14;
+  line-height: var(--h2-lh);
   color: var(--dark);
 }
 .story__body{
@@ -414,9 +416,9 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .highlight__title{
   margin-top: 20px;
   font-family: var(--serif);
-  font-size: 33px;
+  font-size: var(--h2);
   font-weight: 400;
-  line-height: 42px;
+  line-height: var(--h2-lh);
   color: var(--dark);
 }
 .highlight__body{
@@ -496,6 +498,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   flex-direction: column;
 }
 .pcard__media{
+  overflow: hidden;
   height: 250px;
   background: var(--cream);
   display: flex;
@@ -507,6 +510,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   max-width: 70%;
   max-height: 86%;
   filter: drop-shadow(0 10px 15px rgba(92, 88, 66, .13));
+  transition: transform .6s ease;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -770,7 +774,10 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   height: 258px;
   object-fit: cover;
   object-position: 50% 50%;
+  transition: transform .6s ease;
 }
+.pcard:hover .pcard__media img,
+.icard:hover .icard__img{ transform: scale(1.05); }
 .icard__img--trulli{ object-position: 50% 55%; }
 .icard__img--anti{ object-position: 50% 55%; }
 .icard__body{
@@ -813,9 +820,9 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .newsletter__title{
   font-family: var(--serif);
-  font-size: 32px;
+  font-size: var(--h2);
   font-weight: 400;
-  line-height: 1.14;
+  line-height: var(--h2-lh);
   color: var(--dark);
 }
 .newsletter__lead{
@@ -985,4 +992,18 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   font-size: 13px;
   font-weight: 300;
   color: rgba(247, 244, 235, .62);
+}
+
+/* ==========================================================================
+   Scroll reveal — the .reveal class is applied by script.js, so the page
+   stays fully visible when JavaScript is unavailable.
+   ========================================================================== */
+.reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.reveal.is-visible{
+  opacity: 1;
+  transform: none;
 }

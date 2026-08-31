@@ -446,14 +446,15 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 .btn--story{ margin-top: 26px; }
 .story__media{
   position: relative;
-  /* the footage is 16:9 — matching it means the panel never crops the frame,
-     at any width, so this replaces the per-breakpoint heights entirely */
-  aspect-ratio: 16 / 9;
+  /* the footage is 16:9; this is that plus ~10px of height, kept as a ratio
+     so it scales at every width instead of needing per-breakpoint values.
+     Costs a shallow 3% side crop — against 25% when the panel was 4:3 */
+  aspect-ratio: 560 / 325;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 30px 54px rgba(35, 40, 28, .14);
-  /* poster underneath the iframe: a tracker blocker or a slow connection
-     leaves a finished-looking panel rather than an empty grey box */
+  /* poster behind the video: a slow connection or a codec the browser will
+     not decode leaves a finished-looking panel rather than an empty box */
   background: var(--cream) url("../assets/images/story-poster.jpg") center / cover no-repeat;
 }
 .story__video{
@@ -461,7 +462,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* an exact fit now the panel is 16:9; guards odd sizes */
+  object-fit: cover;      /* trims the 3% the panel is taller than the source */
   border: 0;
   pointer-events: none;   /* ambient footage, not a player */
 }
@@ -469,7 +470,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(18, 22, 14, .10);   /* just a touch, so the footage stays bright */
+  background: rgba(18, 22, 14, .18);   /* just a touch, so the footage stays bright */
   pointer-events: none;
 }
 

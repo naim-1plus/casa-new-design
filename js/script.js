@@ -84,10 +84,10 @@
   /* --- Scroll reveal (same timing and easing as the reference build) --- */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.documentElement.classList.add('no-motion');
-    // CSS can silence animations but not an autoplaying iframe, and ambient
-    // footage is exactly the motion this setting is asking us to stop
+    // CSS can silence animations but not a playing video, and ambient footage
+    // is exactly the motion this setting is asking us to stop
     var ambient = document.querySelector('.story__video');
-    if (ambient) { ambient.src = ambient.src.replace('autoplay=1', 'autoplay=0'); }
+    if (ambient) { ambient.removeAttribute('autoplay'); ambient.pause(); }
   } else if ('IntersectionObserver' in window) {
     // on desktop the icon strip runs a CSS load cascade (it sits just under the
     // fold); once the layout stacks it is far below, so hand it to the observer

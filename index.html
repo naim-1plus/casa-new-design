@@ -156,15 +156,13 @@
       <a href="#" class="btn btn--solid btn--story">Mehr erfahren</a>
     </div>
     <div class="story__media">
-      <!-- youtube-nocookie keeps this GDPR-friendlier; loop needs playlist= to
-           repeat a single video, and autoplay only runs while muted -->
-      <iframe class="story__video"
-              src="https://www.youtube-nocookie.com/embed/ylfARY7E_Uo?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=ylfARY7E_Uo&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3"
-              title="Casa Salento – Il Cuore della Puglia"
-              loading="lazy"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowfullscreen></iframe>
+      <!-- self-hosted: no third-party request, no cookie banner, no branding.
+           muted+playsinline are what make autoplay allowed on iOS and Chrome -->
+      <video class="story__video"
+             src="assets/video/story-puglia.mp4"
+             poster="assets/images/story-poster.jpg"
+             autoplay muted loop playsinline preload="metadata"
+             aria-hidden="true"></video>
     </div>
   </div>
 </section>

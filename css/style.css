@@ -452,20 +452,14 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   box-shadow: 0 30px 54px rgba(35, 40, 28, .14);
   /* poster underneath the iframe: a tracker blocker or a slow connection
      leaves a finished-looking panel rather than an empty grey box */
-  background: var(--cream) url("../assets/images/story-olive-grove.jpg") center / cover no-repeat;
+  background: var(--cream) url("../assets/images/story-poster.jpg") center / cover no-repeat;
 }
-/* the panel is 4:3-ish but the video is 16:9, so the iframe is grown past
-   whichever edge falls short and centred — object-fit:cover for an iframe */
 .story__video{
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  aspect-ratio: 16 / 9;
-  width: auto;
-  height: auto;
-  min-width: 100%;
-  min-height: 100%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* 16:9 footage into a 4:3-ish panel */
   border: 0;
   pointer-events: none;   /* ambient footage, not a player */
 }
@@ -473,7 +467,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(18, 22, 14, .32);
+  background: rgba(18, 22, 14, .12);   /* just a touch, so the footage stays bright */
   pointer-events: none;
 }
 

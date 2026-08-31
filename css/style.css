@@ -445,18 +445,37 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
 }
 .btn--story{ margin-top: 26px; }
 .story__media{
+  position: relative;
+  height: 420px;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 30px 54px rgba(35, 40, 28, .14);
+  /* poster underneath the iframe: a tracker blocker or a slow connection
+     leaves a finished-looking panel rather than an empty grey box */
+  background: var(--cream) url("../assets/images/story-olive-grove.jpg") center / cover no-repeat;
 }
-.story__media img{
-  width: 100%;
-  height: 420px;
-  object-fit: cover;
-  object-position: 50% 55%;
-  transition: transform .6s ease;
+/* the panel is 4:3-ish but the video is 16:9, so the iframe is grown past
+   whichever edge falls short and centred — object-fit:cover for an iframe */
+.story__video{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 16 / 9;
+  width: auto;
+  height: auto;
+  min-width: 100%;
+  min-height: 100%;
+  border: 0;
+  pointer-events: none;   /* ambient footage, not a player */
 }
-.story__media:hover img{ transform: scale(1.05); }
+.story__media::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 22, 14, .32);
+  pointer-events: none;
+}
 
 /* ==========================================================================
    Product highlight
@@ -1269,7 +1288,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   /* ---- story ---- */
   .story__grid{ gap: 40px; }
   .story__text{ padding-right: 0; }
-  .story__media img{ height: 340px; }
+  .story__media{ height: 340px; }
 
   /* ---- highlight: the bottle stops overlapping and sits in the flow ---- */
   .highlight{ padding: var(--section-pad) 0; }
@@ -1404,7 +1423,7 @@ button { font: inherit; color: inherit; border: 0; background: none; cursor: poi
   .story__grid{ grid-template-columns: 1fr; gap: 26px; }
   .story__text{ text-align: center; }
   .story__media{ order: -1; }
-  .story__media img{ height: 240px; }
+  .story__media{ height: 240px; }
   .story__body{ font-size: 15px; line-height: 26px; }
 
   /* ---- highlight ---- */
